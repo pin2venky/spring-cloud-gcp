@@ -19,6 +19,7 @@ package com.example;
 import java.util.List;
 
 import com.google.common.collect.ImmutableMap;
+import java.util.concurrent.TimeUnit;
 import org.awaitility.Duration;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -61,7 +62,7 @@ public class PubSubJsonPayloadApplicationTests {
 		this.testRestTemplate.postForObject(
 				"/createPerson?name={name}&age={age}", null, String.class, params);
 
-		await().atMost(Duration.TEN_SECONDS).untilAsserted(() -> {
+		await().atMost(60, TimeUnit.SECONDS).untilAsserted(() -> {
 			ResponseEntity<List<Person>> response = this.testRestTemplate.exchange(
 					"/listPersons",
 					HttpMethod.GET,
